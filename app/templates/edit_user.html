@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+<!-- page -->
+{% set active_page = "profile" %}
+{% block title %}
+Editar perfil
+{% endblock %}
+
+<!-- css -->
+{% block css %}
+<style>
+  body {
+    padding-top: 6.5rem;
+  }
+</style>
+{% endblock %}
+
+<!-- content -->
+{% block content %}
+<div class="container">
+  <!-- title -->
+  <div class="page-header">
+    <h2>Editar perfil</h2>
+  </div>
+  <hr>
+  <div class="row">
+    <!-- form -->
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <form method="POST" action="{{ url_for('edit_user') }}">
+        {{ formEdit.hidden_tag() }}
+        <div class="form-group">
+          {{ formEdit.bio.label }}
+          {{ formEdit.bio(class_="form-control", id_="bio", rows="3", maxlength="240") }}
+        </div>
+        <script>
+          var textarea = document.getElementById('bio');
+          textarea.innerHTML = "{{ current_user.bio }}"
+        </script>
+        {{ formEdit.submitEditUser(class_="btn btn-primary") }}
+      </form>
+      <hr>
+      <!-- eliminar perfil -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteUserModal">
+        Eliminar perfil
+      </button>
+      <!-- segur? -->
+      <div class="modal fade" id="deleteUserModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteUserModalLabel">Eliminar perfil</h5>
+            </div>
+            <form method="POST" action="{{ url_for('edit_user') }}">
+              {{ formDelete.hidden_tag() }}
+              <div class="modal-body">
+                Segur que vols eliminar el teu perfil? Aquesta decisió és irreversible!
+                <hr>
+                <div class="form-group">
+                  {{ formDelete.password.label }}
+                  {{ formDelete.password(class_="form-control") }}
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">No!</button>
+                {{ formDelete.submitDeleteUser(class_="btn btn-primary") }}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+    <!-- errors -->
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      {% if formEdit.errors %}
+      <div class="alert alert-danger">
+        <h4 class="alert-heading">No s'han pogut enviar les dades, fes una revisió i torna-ho a intentar</h4>
+        {% for field in formEdit.errors %}
+        {% for error in foformEditrm.errors[field] %}
+        · {{error}} <br>
+        {% endfor %}
+        {% endfor %}
+      </div>
+      {% elif formDelete.errors %}
+        <div class="alert alert-danger">
+          <h4 class="alert-heading">No s'han pogut enviar les dades, fes una revisió i torna-ho a intentar</h4>
+          · Contrasenya errònia
+        </div>
+      {% else %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="alert alert-danger">
+            <h4 class="alert-heading">No s'han pogut enviar les dades, fes una revisió i torna-ho a intentar</h4>
+            {% for message in messages %}
+            · {{ message }} <br>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% endwith %}
+      {% endif %}
+    </div>
+  </div>
+  <hr>
+</div>
+{% endblock %}

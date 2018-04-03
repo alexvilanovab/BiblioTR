@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+<!-- page -->
+{% set active_page = "tdr" %}
+{% block title %}
+Treballs de recerca
+{% endblock %}
+
+<!-- css -->
+{% block css %}
+<style>
+  body {
+    padding-top: 6.5rem;
+  }
+</style>
+{% endblock %}
+
+<!-- content -->
+{% block content %}
+<div class="container">
+  <!-- title -->
+  <div class="page-header">
+    <h2>Treballs de recerca</h2>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md">
+      <form method="POST" action="{{ url_for('tdr') }}">
+        {{ formTDR.hidden_tag() }}
+        <div class="form-group">
+          {{ formTDR.title.label }}
+          {{ formTDR.title(class_="form-control", placeholder="No especificar", maxlength="60") }}
+        </div>
+        <div class="form-group">
+          {{ formTDR.subject.label }}
+          {{ formTDR.subject(class_="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ formTDR.year.label }}
+          {{ formTDR.year(class_="form-control") }}
+        </div>
+        <div class="form-group">
+          <div class="form-check">
+            <label class="form-check-label">
+              {{ formTDR.verifiedOnly(class_="form-check-input") }}
+              {{ formTDR.verifiedOnly.label }}
+            </label>
+          </div>
+        </div>
+        {{ formTDR.submitSearchTDR(class_="btn btn-primary") }}
+      </form>
+      <br>
+    </div>
+    <div class="col-md">
+      <form method="POST" action="{{ url_for('tdr') }}">
+        {{ formUser.hidden_tag() }}
+        <div class="form-group">
+          {{ formUser.username.label }}
+          {{ formUser.username(class_="form-control", maxlength="20") }}
+        </div>
+        {{ formUser.submitSearchUser(class_="btn btn-primary") }}
+      </form>
+      <br>
+    </div>
+  </div>
+  <div class="list-group">
+    {% for tdr in tdr_list %}
+      <a href="{{ url_for('user', username=tdr.username) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">
+            <b>{{ tdr.title }}</b>
+            &nbsp;
+            <span class="badge badge-pill badge-info">{{ tdr.subject }}</span>
+            {% if tdr.mark %}
+              &nbsp;
+              <span class="badge badge-pill badge-warning">{{ tdr.mark }}/10</span>
+            {% endif %}
+          </h5>
+          <small>Promoció {{ tdr.year }}</small>
+        </div>
+        <p class="mb-1">{{ tdr.description }}</p>
+        <small>
+          Autor del treball: {{ tdr.name }} ({{ tdr.username }})<br>
+          {% if tdr.school %}
+            Valoració del treball: {{ tdr.school }}
+          {% endif %}
+        </small>
+      </a>
+    {% endfor %}
+  </div>
+  <hr>
+</div>
+{% endblock %}

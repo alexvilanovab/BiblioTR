@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+<!-- page -->
+{% block title %}
+Error!
+{% endblock %}
+
+<!-- css -->
+{% block css %}
+<style>
+  body {
+    padding-top: 6.5rem;
+  }
+</style>
+{% endblock %}
+
+<!-- content -->
+{% block content %}
+<div class="container">
+  {% if error == 'user_not_found' %}
+  <div class="alert alert-danger">
+    <h4 class="alert-heading">No existeix cap usuari amb el nom '{{ username }}'</h4>
+    <p>És possible que l'adreça sigui errònia o que aquest usuari hagi eliminat el seu perfil.</p>
+  </div>
+  {% elif error == 'page_not_found' %}
+  <div class="alert alert-danger">
+    <h4 class="alert-heading">Aquesta pàgina no existeix</h4>
+    <p>No s'ha pogut trobar cap pàgina amb l'adreça introduïda.</p>
+  </div>
+  {% elif error == 'forbidden' %}
+  <div class="alert alert-danger">
+    <h4 class="alert-heading">No tens permís per entrar a aquesta pàgina</h4>
+    <p>Aquesta pàgina és d'accés restringit, si creus que es tracta d'un problema, contacta amb nosaltres.</p>
+  </div>
+  {% elif error == 'gone' %}
+  <div class="alert alert-danger">
+    <h4 class="alert-heading">Aquest fitxer no existeix</h4>
+    <p>Aquest fitxer ja no es troba en la nostra base de dades.</p>
+  </div>
+  {% elif error == 'request_entity_too_large' %}
+  <div class="alert alert-danger">
+    <h4 class="alert-heading">El fitxer que intentes penjar és massa gran</h4>
+    <p>No s'ha pogut processar el fitxer ja que aquest és massa gran.</p>
+  </div>
+  {% elif error == 'internal_server_error' %}
+  <div class="alert alert-danger">
+    <h4 class="alert-heading">La connexió amb el servidor ha fallat</h4>
+    <p>Estem tenint problemes amb el servidor, sentim molt les molèsties.</p>
+  </div>
+  {% elif error == 'login_required_error' %}
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-danger">
+      <h4 class="alert-heading">La pàgina no s'ha pogut mostrar</h4>
+      <p>
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+      </p>
+    </div>
+    {% endif %}
+  {% endwith %}
+  {% else %}
+  <div class="alert alert-danger">
+    <h4 class="alert-heading">Hi ha hagut problemes</h4>
+    <p>Desconeixem la causa d'aquest error, informa'ns i ho intentarem arreglar</p>
+  </div>
+  {% endif %}
+  <hr>
+</div>
+{% endblock %}

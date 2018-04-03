@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- page -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioTR | {% block title %}{% endblock %}</title>
+    <!-- css -->
+    <link rel="icon" href="../static/logos/favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="../static/vendor/bootstrap/bootstrap.css">
+    <style>
+      .navbar-toggler:focus{
+        outline: none;
+        box-shadow:none !important;
+      }
+    </style>
+    {% block css %}
+    {% endblock %}
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+          <img src="../static/logos/logo.png" width="30" height="30">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navb">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navb">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link {{ 'active' if active_page == 'index' }}" href="{{ url_for('index') }}">BiblioTR</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ 'active' if active_page == 'tdr' }}" href="{{ url_for('tdr') }}">Treballs de recerca</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+            {% if current_user.is_authenticated %}
+            <li class="nav-item dropdown {{ 'active' if active_page == 'profile' }}">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                {{ current_user.username }}
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{ url_for('user', username=current_user.username) }}">Perfil</a>
+                <a class="dropdown-item" href="{{ url_for('edit_user') }}">Editar perfil</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ url_for('logout') }}">Tancar sessió</a>
+              </div>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link {{ 'active' if active_page == 'register' }}" href="{{ url_for('register') }}">Crear perfil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ 'active' if active_page == 'login' }}" href="{{ url_for('login') }}">Iniciar sessió</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- content -->
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
+    <!-- footer -->
+    <footer class="container">
+      <p>&copy; Alex Vilanova Bruns 2018</p>
+    </footer>
+    <!-- js -->
+    <script src="../static/vendor/jquery/jquery.js"></script>
+    <script src="../static/vendor/popper/popper.js"></script>
+    <script src="../static/vendor/bootstrap/bootstrap.js"></script>
+  </body>
+</html>

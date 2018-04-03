@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+<!-- page -->
+{% block title %}
+Verificar treball
+{% endblock %}
+
+<!-- css -->
+{% block css %}
+<style>
+  body {
+    padding-top: 6.5rem;
+  }
+</style>
+{% endblock %}
+
+<!-- content -->
+{% block content %}
+<div class="container">
+  <!-- title -->
+  <div class="page-header">
+    <h2>Verificar treball</h2>
+  </div>
+  <hr>
+  <div class="row">
+    <!-- form -->
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <form method="POST" action="{{ url_for('verify') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.school.label }}
+          {{ form.school(class_="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.email.label }}
+          {{ form.email(class_="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.mark.label }}
+          {{ form.mark(class_="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.mantra.label }}
+          {{ form.mantra(class_="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Verificar usuari</button>
+      </form>
+      <br>
+    </div>
+    <!-- errors -->
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      {% if form.errors %}
+      <div class="alert alert-danger">
+        <h4 class="alert-heading">No s'han pogut enviar les dades, fes una revisió i torna-ho a intentar</h4>
+        {% for field in form.errors %}
+        {% for error in form.errors[field] %}
+        · {{error}} <br>
+        {% endfor %}
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <div class="alert alert-danger">
+        <h4 class="alert-heading">No s'han pogut enviar les dades, fes una revisió i torna-ho a intentar</h4>
+        {% for message in messages %}
+        · {{ message }} <br>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+    </div>
+  </div>
+  <hr>
+</div>
+{% endblock %}

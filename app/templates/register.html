@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+<!-- page -->
+{% set active_page = "register" %}
+{% block title %}
+Crear perfil
+{% endblock %}
+
+<!-- css -->
+{% block css %}
+<style>
+  body {
+    padding-top: 6.5rem;
+  }
+</style>
+{% endblock %}
+
+<!-- content -->
+{% block content %}
+<div class="container">
+  <!-- title -->
+  <div class="page-header">
+    <h2>Crear perfil</h2>
+  </div>
+  <hr>
+  <div class="row">
+    <!-- form -->
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <form method="POST" enctype="multipart/form-data" action="{{ url_for('register') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.name.label }}
+          {{ form.name(class_="form-control", maxlength="40") }}
+        </div>
+        <div class="form-group">
+          {{ form.username.label }}
+          {{ form.username(class_="form-control", maxlength="20") }}
+        </div>
+        <div class="form-group">
+          {{ form.bio.label }}
+          {{ form.bio(class_="form-control", rows="3", maxlength="240") }}
+        </div>
+        <div class="form-group">
+          {{ form.email.label }}
+          {{ form.email(class_="form-control", maxlength="254") }}
+        </div>
+        <div class="form-group">
+          {{ form.tdr_file.label }}
+          {{ form.tdr_file(class_="form-control-file") }}
+        </div>
+        <div class="form-group">
+          {{ form.tdr_title.label }}
+          {{ form.tdr_title(class_="form-control", maxlength="60") }}
+        </div>
+        <div class="form-group">
+          {{ form.tdr_description.label }}
+          {{ form.tdr_description(class_="form-control", rows="3", maxlength="500") }}
+        </div>
+        <div class="form-group">
+          {{ form.tdr_subject.label }}
+          {{ form.tdr_subject(class_="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.tdr_year.label }}
+          {{ form.tdr_year(class_="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.password.label }}
+          {{ form.password(class_="form-control") }}
+        </div>
+        <div class="form-group">
+          {{ form.confirmPassword.label }}
+          {{ form.confirmPassword(class_="form-control") }}
+        </div>
+        <div class="form-group">
+          <div class="form-check">
+            <label class="form-check-label">
+              {{ form.remember(class_="form-check-input") }}
+              {{ form.remember.label }}
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Crear perfil</button>
+      </form>
+      <br>
+    </div>
+    <!-- errors -->
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      {% if form.errors %}
+      <div class="alert alert-danger">
+        <h4 class="alert-heading">No s'han pogut enviar les dades, fes una revisió i torna-ho a intentar</h4>
+        {% for field in form.errors %}
+        {% for error in form.errors[field] %}
+        · {{error}} <br>
+        {% endfor %}
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <div class="alert alert-danger">
+        <h4 class="alert-heading">No s'han pogut enviar les dades, fes una revisió i torna-ho a intentar</h4>
+        {% for message in messages %}
+        · {{ message }} <br>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
+    </div>
+  </div>
+  <hr>
+</div>
+{% endblock %}

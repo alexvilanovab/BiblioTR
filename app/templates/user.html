@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+<!-- page -->
+{% if user.username == current_user.username %}
+{% set active_page = "profile" %}
+{% endif %}
+{% block title %}
+{{ user.username }}
+{% endblock %}
+
+<!-- css -->
+{% block css %}
+<style>
+  body {
+    padding-top: 6.5rem;
+  }
+</style>
+{% endblock %}
+
+<!-- content -->
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h2>{{ user.username }}</h2>
+  </div>
+  <hr>
+  <div class="row">
+    <!-- user -->
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header text-center">
+          Usuari
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{ user.name }}</li>
+          {% if user.bio %}
+          <li class="list-group-item">{{ user.bio }}</li>
+          {% endif %}
+          <li class="list-group-item">Usuari des del dia {{ user.creation_date }}</li>
+        </ul>
+      </div>
+      <br>
+    </div>
+    <!-- tdr -->
+    <div class="col-sm-6">
+      <div class="card text-center">
+        <div class="card-header">
+          Treball de recerca
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ user.tdr_title }}
+            &nbsp;
+            <span class="badge badge-pill badge-info">{{ user.tdr_subject }}</span>
+            {% if user.tdr_mark %}
+              &nbsp;
+              <span class="badge badge-pill badge-warning">{{ user.tdr_mark }}/10</span>
+            {% endif %}
+          </h5>
+          <p class="card-text">
+            {{ user.tdr_description }}
+            {% if user.tdr_school %}
+              <br>
+              <small class="text-muted">Valoració del treball: {{ user.tdr_school }}</small>
+            {% endif %}
+          </p>
+          <a href="../static/tdr-pdf/{{ user.username }}.pdf" class="btn btn-primary" target="_blank">Veure treball</a>
+        </div>
+        <div class="card-footer text-muted">Promoció {{ user.tdr_year }}</div>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>
+{% endblock %}

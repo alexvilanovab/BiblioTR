@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+<!-- page -->
+{% set active_page = "index" %}
+{% block title %}
+Inici
+{% endblock %}
+
+<!-- css -->
+{% block css %}
+<style>
+  body {
+    padding-top: 3.7rem;
+  }
+  .jumbotron{
+    background-image: url("../static/img/jumbotron.jpg");
+    background-size: cover;
+  }
+</style>
+{% endblock %}
+
+<!-- content -->
+{% block content %}
+<!-- jumbotron -->
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-3">BiblioTR</h1>
+    <p>
+      Cada any, a Catalunya, s'escriuen milers de treballs de recerca.
+      Són treballs fets amb molt esforç per part dels alumnes de segon de Batxillerat.
+      Una vegada llegits i exposats, molts d'aquests treballs queden guardats i oblidats.
+      BiblioTR ofereix la possibilitat d'agrupar els treballs de recerca i fer-los de lliure accés aprofitant l'esforç dels estudiants proporcionant coneixement.
+    </p>
+    <hr>
+    <p>
+      BiblioTR no només és una pàgina web, també és un treball de recerca.
+      Si tens curiositat i el vols llegir a continuació hi ha un enllaç directe.
+    </p>
+    <p><a class="btn btn-primary btn-lg" href="{{ url_for('user', username='alexvilanovab') }}">Llegir treball &raquo;</a></p>
+  </div>
+</div>
+<!-- info -->
+<div class="container">
+  <div class="row">
+    <!-- info1 -->
+    <div class="col-md-4">
+      <h2>Lliure accés</h2>
+      <p>
+        BiblioTR és i sempre serà de lliure accés.
+        Qualsevol persona pot entrar, llegir i baixar els diferents documents disponibles.
+      </p>
+    </div>
+    <!-- info2 -->
+    <div class="col-md-4">
+      <h2>Projecte contributiu</h2>
+      <p>
+        BiblioTR és un projecte contributiu.
+        Això significa que aquest lloc web no seria possible sense la contribució dels diferents estudiants amb els seus treballs.
+      </p>
+    </div>
+    <!-- info3 -->
+    <div class="col-md-4">
+      <h2>Fiable</h2>
+      <p>
+        Els treballs que hi ha a BiblioTR són reals.
+        Els centres educatius verifiquen els treballs dels estudiants puntuant-los amb la nota real del treball.
+      </p>
+    </div>
+  </div>
+  <hr>
+</div>
+{% endblock %}
